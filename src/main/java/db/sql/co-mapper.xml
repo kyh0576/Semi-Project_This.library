@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+<entry key="insertCommantary">
+
+INSERT 
+   INTO 
+     COMMENTARY(
+                WRITE_NO ,
+                MEM_NO ,
+                AUTHOR ,
+                TITLE ,
+                CONTENT
+                )
+            VALUES
+            (
+            SEQ_COMMENTARY_NO.NEXTVAL
+              , ?
+              , ?
+              , ?
+              , ?
+              )
+</entry>
+<entry key="selectCommentary">
+				SELECT WRITE_NO,
+							 MEM_NO,
+							 AUTHOR,
+							 TITLE,
+				      CONTENT,
+				      TO_CHAR(WRITE_DATE,'YYYY-MM-DD') WDATE
+				FROM COMMENTARY
+				WHERE STATUS = 'Y'
+				AND MEM_NO = ?
+				ORDER BY WRITE_NO DESC
+</entry>
+ </properties>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="selectList">
+	SELECT *
+		FROM (
+		       SELECT ROWNUM RNUM, A.*
+		       FROM (
+                  SELECT
+                          VOTE_NO
+                        , MEM_NO
+                        , NICKNAME
+                        , VOTE_TITLE
+                        , COUNT
+                        , TO_CHAR(VOTE_STARTDATE, 'YYYY-MM-DD') "VOTE_STARTDATE"
+                     FROM VOTE V
+                     JOIN MEMBER USING(MEM_NO)
+                    WHERE V.STATUS = 'Y'
+                    ORDER
+                       BY VOTE_NO DESC
+		            ) A
+		     )
+	WHERE RNUM BETWEEN ? AND ?
+	</entry>
+
+	<entry key="selectListCount">
+	SELECT 
+	       COUNT(*) COUNT
+	  FROM VOTE
+	 WHERE STATUS = 'Y'
+	</entry>
+
+	<entry key="insertVote">
+	INSERT 
+	  INTO VOTE
+       (
+       	 VOTE_NO
+       , MEM_NO
+	     , VOTE_TITLE
+	     , BOOK1
+       , BOOK2
+       , VOTE_STARTDATE
+       , VOTE_ENDDATE
+       , BOOK1_URL
+       , BOOK2_URL
+       , STATUS
+	     )
+	VALUES
+	     (
+	       SEQ_VOTE_NO.NEXTVAL
+   	   , ?
+	     , ?
+	     , ?
+       , ?
+       , SYSDATE
+       , ?
+       , ?
+       , ?
+       , 'Y'
+	     )
+	</entry>
+	
+  <entry key="increaseCount">
+  UPDATE VOTE
+	   SET COUNT = COUNT + 1
+	 WHERE VOTE_NO = ?
+	   AND STATUS = 'Y'
+  </entry>
+  
+  <entry key="selectVote">
+  SELECT 
+	       VOTE_NO
+	     , NICKNAME
+	     , MEM_NO
+	     , VOTE_TITLE
+	     , BOOK1
+	     , BOOK2
+       , VOTE_STARTDATE
+       , TO_CHAR(VOTE_ENDDATE, 'YYYY-MM-DD') "VOTE_ENDDATE"
+       , VOTE_COUNT1
+       , VOTE_COUNT2
+       , BOOK1_URL
+       , BOOK2_URL
+       , COUNT
+	     , V.STATUS
+	  FROM VOTE V
+	  JOIN MEMBER USING(MEM_NO)
+	 WHERE VOTE_NO = ?
+  </entry>
+  
+  <entry key="vote1">
+  UPDATE VOTE
+	   SET VOTE_COUNT1 = VOTE_COUNT1 + 1
+	 WHERE VOTE_NO = ?
+  </entry>
+  
+  <entry key="vote2">
+  UPDATE VOTE
+	   SET VOTE_COUNT2 = VOTE_COUNT2 + 1
+	 WHERE VOTE_NO = ?
+  </entry>
+  
+  <entry key="updateVote">
+  UPDATE VOTE
+	   SET VOTE_TITLE = ?
+	     , BOOK1 = ?
+	     , BOOK2 = ?
+	     , VOTE_ENDDATE = ?
+	     , BOOK1_URL = ?
+	     , BOOK2_URL = ?
+	 WHERE VOTE_NO = ?
+  </entry>
+  
+  <entry key="deleteVote">
+	UPDATE VOTE
+	   SET STATUS = 'N'
+	 WHERE VOTE_NO = ?
+  </entry>
+  
+ 	<entry key="insertReply">
+  INSERT
+	  INTO VOTE_ANSWER
+	  (
+	      V_ANSWER_NO
+      , MEM_NO
+      , VOTE_NO
+	 		, V_ANSWER
+	  )
+	VALUES
+		(
+		   SEQ_V_ANSWER_NO.NEXTVAL
+		 , ?
+		 , ?
+		 , ?
+		 )
+  </entry>
+  
+  <entry key="voteAnswerCount">
+  SELECT COUNT(*) "COUNT"
+	  FROM VOTE_ANSWER
+	 WHERE VOTE_NO = ?
+	   AND STATUS = 'Y'
+  </entry>
+  
+ 	<entry key="selectReplyList">
+  SELECT
+	       V_ANSWER_NO
+	     , MEM_NO
+	     , V_ANSWER
+	     , NICKNAME
+	     , TO_CHAR(ANSWER_DATE, 'YY/MM/DD HH:MI') "ANSWER_DATE"
+	  FROM VOTE_ANSWER VA
+	  JOIN MEMBER USING(MEM_NO)
+	 WHERE VA.STATUS = 'Y'
+	   AND VOTE_NO = ?
+	 ORDER
+	    BY V_ANSWER_NO DESC
+  </entry>
+  
+  <entry key="deleteVoteAnswer">
+  UPDATE VOTE_ANSWER
+	   SET STATUS = 'N'
+	 WHERE V_ANSWER_NO = ?
+  </entry>
+  
+  <entry key="updateVoteAnswer">
+  UPDATE VOTE_ANSWER
+	   SET V_ANSWER = ?
+	 WHERE V_ANSWER_NO = ?
+  </entry>
+</properties>

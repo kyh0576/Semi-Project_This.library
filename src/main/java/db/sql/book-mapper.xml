@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="selectReplyList">
+	SELECT 
+	       BOOK_ANSWER_NO
+	     , ISBN_NO
+	     , MEM_NO
+	     , ANSWER_CONTENT
+	     , STAR
+	     , NICKNAME
+	     , TO_CHAR(ANSWER_DATE, 'YY/MM/DD HH:MI') "ANSWER_DATE"
+ 	  FROM BOOK_ANSWER BA
+	  JOIN MEMBER USING(MEM_NO)
+	 WHERE BA.STATUS = 'Y'
+	   AND ISBN_NO = ?
+	 ORDER
+	    BY BOOK_ANSWER_NO DESC
+  </entry>
+  
+  <entry key="bookAnswerCount">
+  SELECT COUNT(*) "COUNT"
+	  FROM BOOK_ANSWER
+	 WHERE ISBN_NO = ?
+	   AND STATUS = 'Y'
+  </entry>
+  
+	<entry key="insertReply">
+  INSERT
+	  INTO BOOK_ANSWER
+  		 (
+	    	 BOOK_ANSWER_NO
+       , MEM_NO
+       , ISBN_NO
+	 		 , ANSWER_CONTENT
+       , STAR
+  		 )
+	VALUES
+			 (
+		     SEQ_BOOK_ANSWER_NO.NEXTVAL
+		   , ?
+		   , ?
+		   , ?
+       , ?
+	 		 )
+  </entry>
+  
+ 	<entry key="deleteBookAnswer">
+  UPDATE BOOK_ANSWER
+	   SET STATUS = 'N'
+	 WHERE BOOK_ANSWER_NO = ?
+  </entry>
+  
+  <entry key="updateBookAnswer">
+  UPDATE BOOK_ANSWER
+	   SET ANSWER_CONTENT = ?
+	 WHERE BOOK_ANSWER_NO = ?
+  </entry>
+</properties>

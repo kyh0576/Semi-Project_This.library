@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="loginMember">
+	SELECT 
+	       MEM_NO
+	     , MEM_NAME
+	     , MEM_ID
+	     , MEM_PWD
+	     , NICKNAME
+	     , ADDRESS
+	     , EMAIL
+	     , PROFILE
+	     , PHONE
+	     , STATUS
+	     , SNS_KEY
+	  FROM MEMBER
+	 WHERE MEM_ID = ?
+	   AND MEM_PWD = ?
+	   AND STATUS = 'Y'
+	</entry>
+	
+	<entry key="insertMember">
+	INSERT 
+	  INTO MEMBER
+	     (
+	       MEM_NO
+	     , MEM_NAME
+	     , MEM_ID
+	     , MEM_PWD
+	     , NICKNAME
+	     , ADDRESS
+	     , EMAIL
+	     , PHONE
+	     , SNS_KEY
+	     )
+	VALUES
+	     ( 
+	       SEQ_MEM_NO.NEXTVAL
+	     , ?
+	     , ?
+	     , ?
+	     , ?
+	     , ?
+	     , ?
+	     , ?
+	     , ?
+	     )
+	</entry>
+	<entry key="idCheck">
+		SELECT 
+		       COUNT(*) AS COUNT
+		  FROM MEMBER
+		 WHERE MEM_ID = ?
+	</entry>
+	<entry key="findPwd">
+		SELECT COUNT(*) 
+			FROM MEMBER WHERE MEM_NAME = ? 
+			AND MEM_ID = ? 
+			AND EMAIL = ?
+	</entry>
+	
+	<entry key="updatePwd">
+		UPDATE MEMBER
+			SET MEM_PWD = ?
+			WHERE MEM_ID = ?
+	</entry>
+	<entry key="findIdPage">
+		SELECT MEM_ID
+		  FROM MEMBER
+		 WHERE MEM_NAME = ?
+		   AND EMAIL = ?
+	</entry>
+	<entry key="nickCheck">
+		SELECT 
+		       COUNT(*) AS COUNT
+		  FROM MEMBER
+		 WHERE NICKNAME = ?
+	</entry>
+	
+	<entry key = "naverSnsKey">
+		SELECT 
+		       MEM_NO
+		     , MEM_NAME
+		     , MEM_ID
+		     , MEM_PWD
+		     , NICKNAME
+		     , ADDRESS
+		     , EMAIL
+		     , PROFILE
+		     , PHONE
+		     , STATUS
+		     , SNS_KEY
+		  FROM MEMBER
+		 WHERE SNS_KEY = ?
+	</entry>
+	
+	<entry key="selectSnsKey">
+		SELECT 
+		       MEM_NO
+		     , MEM_NAME
+		     , MEM_ID
+		     , MEM_PWD
+		     , NICKNAME
+		     , ADDRESS
+		     , EMAIL
+		     , PROFILE
+		     , PHONE
+		     , STATUS
+		     , SNS_KEY
+		  FROM MEMBER
+		 WHERE SNS_KEY = ?
+		   AND STATUS = 'Y'
+	</entry>
+	<entry key="selectMemberByName">
+		SELECT 
+		       MEM_NO
+		     , MEM_NAME
+		     , MEM_ID
+		     , MEM_PWD
+		     , NICKNAME
+		     , ADDRESS
+		     , EMAIL
+		     , PROFILE
+		     , PHONE
+		     , STATUS
+		     , SNS_KEY
+		  FROM MEMBER
+			WHERE SNS_KEY = ?
+			AND STATUS = 'Y'
+	</entry>
+	
+	
+	<entry key="deleteMember">
+		UPDATE MEMBER
+			SET STATUS = 'N'
+			WHERE MEM_NO = ?
+	</entry>
+	
+	
+		
+	<entry key="updateUserInfo">
+				UPDATE MEMBER
+			SET MEM_PWD = ?
+			, NICKNAME = ?
+      ,  EMAIL = ?
+      ,  PHONE = ?
+			WHERE MEM_NO = ?
+	</entry>
+</properties>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+
+<entry key="countFollower">
+
+SELECT COUNT(FOLLOWING_ID) FOLLOWER
+FROM FOLLOW
+WHERE FOLLOWER_ID = ?
+</entry>
+
+<entry key="countFollowing">
+
+SELECT COUNT(FOLLOWER_ID) FOLLOWING
+                FROM FOLLOW
+                WHERE FOLLOWING_ID = ?
+
+
+</entry>
+
+</properties>
